@@ -1,0 +1,23 @@
+name: GEO242
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - gdal
+  - git
+  - joblib
+  - jupyter
+  - ipywidgets<8.0.0
+  - matplotlib<3.7.0
+  - netcdf4
+  - numpy
+  - pip
+  - pygmt
+  - sardem
+  - scipy
+  - utm
+  - wget
+  - pip:
+    - ipynb
+    - okada_wrapper
+    - url-widget  
