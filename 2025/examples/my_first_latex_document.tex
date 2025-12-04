@@ -1,0 +1,130 @@
+\documentclass[12pt,notitlepage]{article}
+\usepackage{graphicx,amsmath,natbib}
+\begin{document}
+\title{A load of nonsense!}
+\author{Gareth Funning}
+\maketitle
+
+\section{Hello}
+\label{text:hello}
+
+Hello!
+\\
+``Hello!'' said the class. 
+
+If you want to put things in `single quotes', you can -- just remember to use the backwards quote key for the first quotation mark.
+
+I think it is very good practice to use the `tilde' symbol often, so that 3 km is treated as a single word.
+
+I think it is very good practice to use the `tilde' symbol often, so that 3~km is treated as a single word.
+
+If you want a tilde in your text use the `sim' command $\sim$\footnote{This is a footnote, for people who love digressions.} or so.
+
+% If you only use the 'forward' quote, it looks weird.
+
+I don't use em-dashes, personally---but I understand\footnote{I mean, I am not a robot---I have empathy.} some people like them.
+
+Did you know I have actual seismology chops? I'm not just a guy wearing a `Seismonology' T-shirt who hangs out with seismologists. I did a whole project on focal mechanisms as a Masters student \citep{Funn2000}! I found three whole volumetric earthquakes! There is also a bunch of seismology stuff in my PhD dissertation which nobody ever reads \citep{Funn2005}. Of course, I have lots of papers about earthquakes that don't include any waveforms at all \citep[e.g.][]{Funn-etal2005,FunnGarc2019}. But that's okay, because they probably have some rather lovely interferograms in them instead!
+
+\subsection{This is a subsection}
+Isn't it awesome?
+
+I sometimes like to write text in italics. {\it I find it lends a certain something to the text, you know?}
+
+Be sparing with {\bf bold face text}. You don't want to look like you're shouting.
+
+\subsubsection{My first subsubsection!}
+Starting to get a bit small now.
+
+\subsubsection{Another subsubsection}
+If you're going to use subsubsections, you really ought to have more than one, otherwise why bother?
+
+\subsubsection{And another one}
+
+Apropos of nothing much, did you know that there is a \LaTeX~symbol in LaTeX? Personally, I think it's kinda ugly, but it's there in case you need a kinda ugly symbol to describe what you used to typeset your article.
+
+\subsection{And another subsection}
+I feel the same way about subsections. You need at least two of them if you are going to use them at all. So I just added another one here. Go me!
+
+\section{Gratuitous extra section}
+\label{text:gratuitous}
+
+I just added this to change the section numbering. Woah!
+
+
+
+\section{I love math}
+\label{text:math}
+
+The equation of a circle -- $x^2 +y^2 = r^2$ -- is a pretty easy thing to render with inline math. We've known about it since Pythagoras!
+
+You want more equations? How about the equation for seismic moment? $M_0 = \mu A \bar{u}$. I wonder what happens to that with word-wrapping?
+
+Now, you can have stand-alone equations, like this one:
+
+\begin{equation}
+Q = \frac{k}{n} A r^{\frac{2}{3}}s^{\frac{1}{2}}
+\label{eq:manning}
+\end{equation}
+
+If you add another equation, that should get its own number:
+
+\begin{equation}
+\sin^2 x + \cos^2 x = 1
+\label{eq:pythagoras}
+\end{equation}
+
+More equations! Something a little more complicated, maybe?
+
+\begin{equation}
+\int_a^b x~dx = \frac{1}{2}(b^2 - a^2)
+\label{eq:integral}
+\end{equation}
+
+\section{Figures and stuff}
+
+Sometimes you want to display a figure with your stuff. Let's have a go at that!
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=6cm,angle=270]{../basic_GMT/globe.ps}
+  \end{center}
+  \caption{\label{fig:map} My map of Earth with plate boundaries. I'm very proud of it, you know.}
+\end{figure}
+
+I am going to keep adding words here just to bulk out this document. LaTeX's figure rendering codes really come into their own with longer documents with a lot of text. So I need more text. I have not resorted yet to using Lorem Ipsum and all that to fill my document with meaningless (to me) Latin. Anyway, I am very proud that I am able to make LaTeX documents, it was a really valuable skill I learned in grad school, more or less on my own, with a bit of help from the grad students around me (thanks to Tim Wright and Jenny Brett!)
+
+\begin{table}[tb]
+  \caption{\label{table:cost} This is a table. Again I am very proud of it. I don't think it needs much explanation.}
+  \begin{center}
+    \begin{tabular}{| l | c c |}
+      \hline
+      Name & Location & Cost \\
+      \hline
+      Gareth & Riverside & Very expensive \\
+      Ashley & Apple Valley & \textdollar17k/quarter \\
+      Donkeys & My neighborhood & Free! \\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+
+You know, before this Internet thing really took off, you used to have to look up LaTeX commands in a book? I even bought the book when I started at UCR. I think I have it somewhere in my office, still, but I probably haven't looked at it in 10 years or more!
+
+I can refer to figures in here! Let's see... Figure~\ref{fig:map} is a map with some plate boundaries and stuff, with the continents colored in a sickly green color. I had to add the label to the figure caption to get the numbering to work properly. In Section~\ref{text:hello} we said ``Hello!'' So now you know where that is.
+
+We also wrote some equations, which was nice. They are all to be found in Section~\ref{text:math}. Equation~\ref{eq:manning} was Manning's equation, which is not a reference to Bernard Manning or Peyton Manning, something to do with rivers, I think. Equation~\ref{eq:pythagoras} was the trig version of the Pythagoras relation. And finally, equation~\ref{eq:integral} was a random integral.
+
+
+I still need more words, apparently. This is a bit annoying. Still, I have a lot to say, it's just that I have writer's block that makes it very difficult to express myself properly. I actually have about a seven paper backlog, and here I am typing meaningless drivel into a LaTeX document that nobody is going to read. Ah well, those are the breaks, I guess. Did you know I had ambitions to be a journalist when I was in college? I actually was the News Editor for the Cambridge University newspaper! My two contempraries both got jobs in broadcast media -- Sam Coates is the deputy news editor at Sky News these days!
+
+Meanwhile, my tables are feeling left out, so let's give them a shout-out. Table~\ref{table:cost} is a very nice table and we're all very proud of it. I'd also like to acknowledge that I added Section~\ref{text:gratuitous} for completely gratuitous reasons, and now I have added a completely gratuitous reference to it here as well. (I like the word ``gratuitous''.)
+
+\section{Conclusions}
+
+I should conclude something here, I suppose? I think if you look in the LaTeX document for this, the next couple of lines will be bibliography commands to make sure that my citations are properly included. And that seems fair enough to me! Enjoy reading my reference list!
+
+\bibliographystyle{gji}
+\bibliography{new_refs}
+
+\end{document}

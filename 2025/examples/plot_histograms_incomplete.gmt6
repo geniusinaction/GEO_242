@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# plot_histograms.gmt6 - script to plot a bunch of histograms
+
+infile='earthquake_model_parameters.dat'  # file with earthquake source parameters
+outfile='histograms.ps'
+
+# let's set this to print on american paper
+gmt set PS_MEDIA letter
+
+# try to get all of the histograms to fit first! some arithmetic:
+
+# thinking to get each row of 5 histograms to fit in 10 inches
+# so 5 histograms at 1.5 inches each, with 2.5 inches of spaces
+# there should be 4 spaces, so each space is 2.5/4 = 0.625 inches
+# so the total X origin shift should be 1.5+0.625 = 2.125 inches per plot  
+
+# and then we want to fit two rows in 6.5 inches
+# so, 3 inches per row, with a 0.5 inch space between them!
+# the total Y origin shift should be 3+0.5 = 3.5 inches per row
+
+# my proposed approach:
+
+# 1. start by blocking out the plots with basemap frames to see if they all fit
+# 2. label them each with the parameter you want to plot
+# 3. replace the blank map frames with actual histograms
+
+# lower left position is the first plot
+#gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X0.5i -K > $outfile
+awk '{print $5/1000}' $infile | gmt pshistogram -JX1.5i/3i -BWeSn -Bxa20f5 -Bya100f20 -X0.5i -W0.5 -T300/350/5 -K > $outfile
+echo x \(km\) | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo y | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo length | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo top | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo bottom | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+# start of the top row
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X-8.5i -Y3.5i -O -K >> $outfile
+echo strike | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo dip | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo rake | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo slip | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+gmt psbasemap -JX1.5i/3i -R0/10/0/10 -BWeSn -Ba5f1 -X2.125i -O -K >> $outfile
+echo moment | gmt pstext -J -R -F+cTL+jTL -Dj0.2c -O -K >> $outfile 
+
+# close your plot file
+echo showpage >> $outfile
+echo end >> $outfile
+
+

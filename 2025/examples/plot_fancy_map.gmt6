@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# plot a fancy map with nice shaded relief topography
+# other required elements:
+#  1. network seismicity
+#  2. earthquake focal mechanisms
+#  3. NOTA GPS velocity vectors
+#  4. place names and other geographical markers
+#  5. traces of Holocene faults
+
+# gjf, 21-oct-2025
+
+# input earthquakes
+eqfile='dbsearch.2633381.txt'
+
+# input focal mechanisms
+mecafile='dbsearch.3183441.txt'
+
+# set a variable name for output
+outfile='fancy_map.ps'
+
+# gnss velocity file
+velfile='cwu.final_nam14.vel' 
+
+# fault files
+historic_faults='Historical.kml'
+holocene_faults='LatestQuaternary.kml'
+
+# set bounds for your plot
+xmin=-123.5
+xmax=-121.5
+ymin=37.5
+ymax=39.5
+
+# make a variable for your dem file name
+demfile='north_bay.i2.dem'
+
+# ...and for your color palette
+colpal='elevation.cpt'
+
+
+# download a dem file 
+# (this requires the sardem package - install with 'mamba install sardem'
+#  if you don't already have it)
+#sardem --bbox $xmin $ymin $xmax $ymax --keep-egm --data-source COP -of ENVI -ot int16 -o $demfile
+
+# make a color palette
+#gmt makecpt -Cdem2 -T-100/2200/100 -D > $colpal
+
+# calculate dem gradient for shaded relief (choose an azimuth at right angles to
+# the trend of the topography)
+#gmt grdgradient $demfile -Ggrad_$demfile -A225 -Ne0.6
+
+# plot map frame 
+gmt psbasemap -JM6.5i -R$xmin/$xmax/$ymin/$ymax -Ba1f0.5 -BWeSn -P -K > $outfile
+
+# optional: plot coastlines/land/water to check the area 
+# (also runs faster than grdimage if you are testing other commands)
+#gmt pscoast -J -R -Ggray80 -Dh -O -K >> $outfile
+
+# plot your dem with shaded relief
+gmt grdimage -J -R $demfile -Igrad_$demfile -C$colpal -O -K >> $outfile
+
+# elevation color scale
+gmt psscale -J -R -C$colpal -Dg-123.4/37.6+jBL+w4c/0.75c+v -Bpa1000f200+l"elevation (m)" -O -K >> $outfile
+
+# plot your faults
+gmt kml2gmt $historic_faults | gmt psxy -J -R -Wthin,darkred -O -K >> $outfile
+gmt kml2gmt $holocene_faults | gmt psxy -J -R -Wthin,darkred -O -K >> $outfile
+
+# plot your seismicity (mine is a NCEDC catalog csv file)
+awk -F, '{if (NR>1) print $3,$2}' $eqfile | gmt psxy -J -R -Sc0.05 -Ggray30 -O -K >> $outfile
+
+# extract the correct columns from your velocity file and plot them
+# (this was downloaded from EarthScope, I needed a login)
+awk '{if (NR>36) print $9, $8, $21, $20, $24, $23, $26, $1}' $velfile | gmt psvelo -J -R -Se50c/0.95+f0 -Gblack -Wthinner -O -K >> $outfile
+
+# plot focal mechanisms (these were supplied in psmeca format by the NCEDC)
+gmt psmeca $mecafile -J -R -Sm1c -O -K >> $outfile
+
+# put some placenames on the map (found using Google)
+echo -122.7141 38.4404 | gmt psxy -J -R -Sc0.2c -Gblack -Wthin,white -O -K >> $outfile
+echo -122.7141 38.4404 Santa Rosa | gmt pstext -J -R -Dj0.2c -F+jTL+f12p,Helvetica-Bold -O -K >> $outfile
+echo -121.7405 38.5449 | gmt psxy -J -R -Sc0.2c -Gblack -Wthin,white -O -K >> $outfile
+echo -121.7405 38.5449 Davis | gmt pstext -J -R -Dj0.2c -F+jBR+f12p,Helvetica-Bold -O -K >> $outfile
+echo -122.2730 37.8715 | gmt psxy -J -R -Sc0.2c -Gblack -Wthin,white -O -K >> $outfile
+echo -122.2730 37.8715 Berkeley | gmt pstext -J -R -Dj0.2c -F+jTL+f12p,Helvetica-Bold -O -K >> $outfile
+
+# close the postscript file properly
+echo showpage >> $outfile
+echo end >> $outfile
+
+# and you're done!
+

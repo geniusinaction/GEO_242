@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# plot_eq_map.gmt6 - an example of a map with lots of features
+# we'll be plotting a map of southern California with earthquakes on it
+
+# gjf, 09-oct-2025
+
+# define the locations of your input files and an output filename
+inquakes='../eq_exercise/eq_data/daily_max_magnitude.txt' # path to file of largest daily earthquakes
+inquakedir='../eq_exercise/eq_data'  # directory with all the .dat files (may be different on your machine)
+colpal='day.cpt'
+outfile='interesting_map.ps'
+
+# optionally make a plain map frame (for Delton) and set the paper size
+#gmt set MAP_FRAME_TYPE plain
+gmt set MAP_FRAME_TYPE fancy
+gmt set PS_MEDIA letter
+
+# make your map frame - very exciting!
+gmt psbasemap -JM9i -R-120/-114/32/36 -BWeSn -Bxya1f0.5 -Y0.75i -K > $outfile
+
+# plot a coastline and the Colorado river
+gmt pscoast -J -R -Ggray90 -Dh -Wfaint -I1/thicker,lightblue -O -K >> $outfile
+
+# plot the state borders
+gmt pscoast -J -R -Dh  -N2/thin,.- -O -K >> $outfile
+
+# plot the mexican border
+gmt pscoast -J -R -Dh -N1/thicker,-- -O -K >> $outfile
+
+# plot all the seismicity from September 2010
+cat $inquakedir/2*.dat | awk '{print $7, $6, $4/10}' | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+
+# make a color palette to color code the days
+gmt makecpt -Cjet -T0/30/1 > $colpal
+
+# grab the columns representing longitude and latitude from the earthquakes file 
+awk '{print $7, $6, substr($1,9,2), $4/10}' $inquakes | gmt psxy -J -R -Sc -C$colpal -Wfaint -N -O -K >> $outfile
+
+# add a map scale
+gmt psbasemap -J -R -L-119.5/32.25/33.5/50k -O -K >> $outfile
+
+# add a color scale
+gmt psscale -J -R -Dg-119.5/32.5+jBC+w4c/0.75c+v -Ba10f5+l"day" -C$colpal -O -K >> $outfile
+
+# add a label and symbol for Riverside
+echo -117.3758 33.9825 | gmt psxy -J -R -Sa1c -Gdarkbrown -Wthin,hotpink -O -K >> $outfile
+echo -117.3758 33.9825 Riverside | gmt pstext -J -R -F+f14p,Helvetica-Bold+jBL -Dj0.3c -Gwhite -Wthin,hotpink -O -K >> $outfile
+
+# label the plot with the date
+echo September 2010 | gmt pstext -J -R -F+f16p,Helvetica-Bold+cTL+jTL -Dj0.3c -O -K >> $outfile
+
+# add a legend... first, plot a white box
+gmt psxy -J -R -Wthin -Gwhite -L -O -K << EOF >> $outfile
+-114.25 35.85
+-114.25 34.85
+-115.25 34.85
+-115.25 35.85
+EOF
+
+# and now some symbols and labels
+echo -115 35.75 Magnitude | gmt pstext -J -R -F+jML+f12p -O -K >> $outfile 
+echo -115 35.6 0.5 | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+echo -115 35.6 5 | gmt pstext -J -R -F+jML+f12p -Dj0.5c -O -K >> $outfile
+echo -115 35.45 0.4 | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+echo -115 35.45 4 | gmt pstext -J -R -F+jML+f12p -Dj0.5c -O -K >> $outfile
+echo -115 35.3 0.3 | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+echo -115 35.3 3 | gmt pstext -J -R -F+jML+f12p -Dj0.5c -O -K >> $outfile
+echo -115 35.15 0.2 | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+echo -115 35.15 2 | gmt pstext -J -R -F+jML+f12p -Dj0.5c -O -K >> $outfile
+echo -115 35 0.1 | gmt psxy -J -R -Sc -Wfaint -O -K >> $outfile
+echo -115 35 1 | gmt pstext -J -R -F+jML+f12p -Dj0.5c -O -K >> $outfile
+
+# close your postscript file nicely
+echo showpage >> $outfile
+echo end >> $outfile
+
+# if your system lets you, produce a png file
+convert -density 300 -trim $outfile $outfile.png
+

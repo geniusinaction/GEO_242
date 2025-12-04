@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# plot a global map with plate boundaries on it
+# with a little help from strangers
+
+# gjf, 09-oct-2025
+
+# set an output file name
+outfile='globe.ps'
+
+# make a global map, Robinson projection, color land pale green
+gmt pscoast -JR24.7c -Rg -Wfaint -Dc -Gpalegreen -Bg30 -K > $outfile
+
+# if you don't have a plate boundary file, go here:
+# https://wiki.paleoearthlabs.org/scientificdata/platetectonics/birdplateboundaries
+
+# plot the plate boundaries
+gmt psxy -J -R pb2002_boundaries.gmt -W0.5p,red -Sf0.25/3p -Gred -O -K >> $outfile
+
