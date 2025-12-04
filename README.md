@@ -9,9 +9,13 @@ The course covers various aspects of scientific computing that may be useful for
 - Simple data manipulation with awk and sed
 - Plotting data and maps using GMT
 - Making formatted text documents using LaTeX
-- Solving simple inverse problems using MATLAB
+- Solving simple inverse problems using MATLAB ([2022 edition](2022/)) and Python ([2025 edition](2025/))
 - Nonlinear optimization and Markov chain Monte Carlo
 
-## Included codes
+## Included codes, scripts and examples
+###[2022](2022/)
+- Linear inverse modeling (curve-fitting)
+- Grid search (also curve-fitting)
 
-Haven't uploaded them yet!
+###[2025](2025/)
+- Ooh, lots of things that I haven't uploaded yet
