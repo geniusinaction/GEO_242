@@ -13,9 +13,9 @@ The course covers various aspects of scientific computing that may be useful for
 - Nonlinear optimization and Markov chain Monte Carlo
 
 ## Included codes, scripts and examples
-###[2022](2022/)
+### [2022](2022/)
 - Linear inverse modeling (curve-fitting)
 - Grid search (also curve-fitting)
 
-###[2025](2025/)
+### [2025](2025/)
 - Ooh, lots of things that I haven't uploaded yet
