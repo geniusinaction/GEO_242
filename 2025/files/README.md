@@ -1,5 +1,5 @@
 # Files from the 2025 course
-These were files used in our in-class exercises, previously available through the Canvas site for the class.
+These were files used in our in-class exercises and homeworks, previously available through the Canvas site for the class.
 - [GEO242.yml](./GEO242.yml) $-$ a requirements file for setting up a miniforge environment with most of the things you need to complete the exercises
 - [files.tar](./files.tar) $-$ a slightly frivolous set of files named for animals, used to practice moving files around with the command line
 - [eq_data.tar.gz](./eq_data.tar.gz) $-$ a set of files containing earthquake catalog information, used for an exercise in extracting data using awk
